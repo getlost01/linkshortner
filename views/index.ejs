@@ -1,27 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <title>Url shortner</title>
-  </head>
-  <body>
-    <h1>URL shortner</h1>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABitShort</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="button.css">
 
-    <% if (locals.error) { %>
-    <p class="error"><%= error %></p>
-    <% } %>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" i
+    ntegrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" 
+    crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" 
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
 
-    <form action="/" method="post">
-      <input type="url" name="url" id="url" placeholder="url here..." />
-      <input type="submit" value="create url" />
-    </form>
-
-    <div class="short-url">
-      <% if (locals.short_url) { %>
-      <a href="<%= short_url %>"><%= short_url %> </a>
-      <% } %>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">ShortABit</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="   border: 1px solid #03e9f4;">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+        </ul>
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+      </div>
     </div>
-  </body>
+  </nav>
+
+      <% if (locals.error) { %>
+        <p class="error"><%= error %></p>
+        <% } %>
+
+      <div class="container-fluid">
+            <div class="col-12 d-flex p-2 justify-content-center ">
+              <form action="/create" autocomplete="off" method="post">
+
+                <div class="formCon">
+   
+                <div class="lanOne">
+                <input type="url" name="url" id="url" placeholder="url here...">
+                <label for="url">Enter Long Url</label>
+                </div>
+
+                <div class="lanOne">
+                <input type="date" name="TimeDeletion" id="TimeDeletion">
+                <label for="TimeDeletion">Enter Expiry Time</label>
+                </div>
+
+                <div class="lanOne">
+                <select name="custom" id="custom">
+                  <option value="false">No</option>
+                  <option value="true">Yes</option>
+                </select>
+                <label for="custom">Is this Custom ShortUrl</label>
+               </div>
+
+                <div class="lanOne">
+                <input type="text" value="" name="customUrl" placeholder="localhost:3001/...." id="customUrl">
+                <label for="customUrl">Customise Your ShortUrl</label>
+                </div>
+
+                <div class="lanOne">
+                  <select name="password" id="password">
+                  <option value="false">No Password</option>
+                  <option value="true">Password Protected</option>
+                </select>
+                <label for="password">Is there Password</label>
+                </div>
+                <div class="lanOne">
+                <input type="text" name="passwordValue" id="passwordValue">
+                <label for="passwordValue">Enter Password</label>
+                </div>
+                   <input type="submit" class="submit" value="Short Now">
+               </div>
+              </form>
+            </div>
+          </div>
+
+      <div class="short-url">
+        <% if (locals.short_url) { %>
+        <a href="<%= short_url %>" target="_blank"><%= short_url %> </a>
+        <% } %>
+      </div>
+
+    <div class="row m-0">
+      <div class="col">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Long Url</th>
+              <th scope="col">Short Url</th>
+              <th scope="col">Clicks</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td ></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" 
+    crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</body>
 </html>

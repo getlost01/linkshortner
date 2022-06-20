@@ -1,39 +1,90 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,700;1,400&display=swap');
-
-body {
-  display: grid;
-  place-items: center;
-  font-family: 'Nunito', sans-serif;
-  background-color: #e8eaf6;
-  color: #1a237e;
+:root{
+  --bgcolor1: #123456;
+  --bgcolor2: #123456;
+  --fontcolor1 : #ffffff;
+  --fontcolor2: #aaaaaa;
+  --bordercolor: #777777;
+  --favColor: #3d8bfd;
+  --favColorDark: #084298;
+}
+.short-url,.error{
+  text-align: center;
+  color: red;
+}
+.formCon{
+  border: 1px solid  var(--bordercolor);
+  width: 350px;
+  border-radius: 10px;
+  position: relative;
+  padding: 10px;
+  padding-top: 20px;
+  background-color: #222222;
+  box-sizing: border-box;
+  box-shadow: 0 15px 25px rgba(0,0,0,.6);
+  border-radius: 10px;
+}
+.formCon .lanOne{
+  position: relative;
+}
+.formCon .lanOne input, .formCon .lanOne select{
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  color: #fff;
+  margin-bottom: 30px;
+  border: none;
+  outline: none;
+  background: transparent;
+  z-index: 1;
+  border-radius: 5px;
+  border: 1px solid var(--bordercolor);
+}
+.formCon .lanOne label{
+  position: absolute;
+  padding: 1px 5px;
+  margin-left: 10px;
+  color: #fff;
+  pointer-events: none;
+  transition: .5s;
+  z-index: 10;
+  background-color: #222222;
+  top: -10px;
+  border-radius: 5px;
+  left: 0;
+  color: #03e9f4;
+  font-size: 12px;
+}
+.formCon .lanOne input:focus,.formCon .lanOne select:focus{
+  border:1px dashed #03e9f4;
+}
+.formCon .lanOne input:hover,.formCon .lanOne select:hover{
+  border:1px solid #03e9f4;
 }
 
-.short-url {
-  margin: 20px;
+  input[type="date"]::-webkit-calendar-picker-indicator {
+     color: white;
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+ }
+.login-box .user-box input {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 30px;
+  border: none;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  background: transparent;
+}
+.login-box .user-box label {
+  position: absolute;
+  top:0;
+  left: 0;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  pointer-events: none;
+  transition: .5s;
 }
 
-.short-url a {
-  color: #1a237e;
-  text-decoration: none;
-}
-
-input[type='url'] {
-  display: block;
-  width: 40vw;
-}
-
-input[type='submit'] {
-  /* width: 100px; */
-  display: block;
-  margin: 10px auto;
-  background-color: #3f51b5;
-  color: white;
-  border: 0px;
-  border-radius: 2px;
-  padding: 4px 8px;
-  font-family: 'Nunito', sans-serif;
-}
-
-p.error {
-  color: #f44336;
-}
