@@ -11,7 +11,9 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
-
+app.listen(process.env.PORT || 3001, function(){
+  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+});
 
     mongoose.connect(process.env.MONGO_CONNECTION_URL, {useNewUrlParser: true ,useUnifiedTopology: true});
     const connection=mongoose.connection;
@@ -31,20 +33,53 @@ app.get('/', async (req, res, next) => {
   res.render('index')
 })
 
-app.post('/', async (req, res, next) => {
+app.post('/create', async (req, res, next) => {
   try {
-    const { url } = req.body
+    // console.log(req.body)
+    const url = req.body.url
+    const expireDay = req.body.TimeDeletion
+    const custom = req.body.custom
+    const customUrl = req.body.customUrl
+    const password = req.body.password
+    const passwordValue = req.body.passwordValue
+    var slug = ""
+    // Check valid URL
     if (!url) {
       throw createHttpError.BadRequest('Provide a valid url')
     }
-    const urlExists = await ShortUrl.findOne({ url })
-    if (urlExists) {
-      res.render('index', {
-        short_url: `${req.headers.host}/${urlExists.shortId}`,
-      })
-      return
+
+    // Expire time Set
+    var temp = expireDay.split('-');
+    var TimeDeletion= new Date(new Date().setFullYear(parseInt(temp[0]),parseInt(temp[1]),parseInt(temp[2])))
+
+    // Check Custom
+    if(custom === 'true')
+    {
+      const urlExists = await ShortUrl.findOne({ shortId:customUrl })
+      if (urlExists) {
+        throw createHttpError.BadRequest('Your custum url already exist try another one')
+      }
+      if(password === 'true'){
+        if (customUrl === "") {
+          throw createHttpError.BadRequest('Please enter a password of atleast 4 variable')
+        }
+      }
+      slug = customUrl;
     }
-    const shortUrl = new ShortUrl({ url: url, shortId: shortId.generate() })
+    else
+    {
+       slug = shortId.generate()
+    }
+
+    // Check Password
+    if(password === 'true')
+    {
+      if (passwordValue.length < 4) {
+        throw createHttpError.BadRequest('Please enter a password of atleast 4 variable')
+      }
+    }
+
+    const shortUrl = new ShortUrl({ url: url, shortId: slug ,TimeDeletion: TimeDeletion.setSeconds(0,0), custom, password, passwordValue})
     const result = await shortUrl.save()
     res.render('index', {
       short_url: `${req.headers.host}/${result.shortId}`,
@@ -62,6 +97,7 @@ app.get('/:shortId', async (req, res, next) => {
       throw createHttpError.NotFound('Short url does not exist')
     }
     res.redirect(result.url)
+    await result.updateOne({ count: result.count+1 })
   } catch (error) {
     next(error)
   }
@@ -76,4 +112,12 @@ app.use((err, req, res, next) => {
   res.render('index', { error: err.message })
 })
 
-app.listen(3000, () => console.log('🌏 on port 3000...'))
+setInterval(()=>{
+  var timeNow = new Date(new Date().setSeconds(0,0));
+  var myquery = { TimeDeletion: timeNow};
+  ShortUrl.deleteMany(myquery, function(err, obj) {
+    if (err) throw err;
+    console.log("some document deleted");
+    console.log(timeNow);
+  });
+},60000);
