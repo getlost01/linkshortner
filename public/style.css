@@ -7,9 +7,19 @@
   --favColor: #3d8bfd;
   --favColorDark: #084298;
 }
-.short-url,.error{
+body{
+  background-color: #464646;
+}
+.error{
   text-align: center;
-  color: red;
+  color: rgb(255, 255, 255);
+  padding: 10px;
+  width: 100%;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ff5050;
 }
 .formCon{
   border: 1px solid  var(--bordercolor);
@@ -66,25 +76,18 @@
     background-color: rgb(255, 255, 255);
     border-radius: 5px;
  }
-.login-box .user-box input {
-  width: 100%;
-  padding: 10px 0;
-  font-size: 16px;
-  color: #fff;
-  margin-bottom: 30px;
-  border: none;
-  border-bottom: 1px solid #fff;
-  outline: none;
-  background: transparent;
-}
-.login-box .user-box label {
-  position: absolute;
-  top:0;
-  left: 0;
-  padding: 10px 0;
-  font-size: 16px;
-  color: #fff;
-  pointer-events: none;
-  transition: .5s;
-}
+ .formCon .iRead {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: aliceblue;
+  font-size: 10px;
+  padding: 5px;
+  margin-bottom: 10px;
+ }
+ .formCon .iRead input{
+  width: 14px;
+  height: 14px;
+  margin: 0 5px;
+ }
 

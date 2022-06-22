@@ -1,0 +1,84 @@
+body{
+    background-color: #222222; 
+    color: aliceblue;
+}
+.short-url{
+    text-align: center;
+    color: rgb(255, 255, 255);
+    font-size: 16px;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #505050;
+    margin: 0;
+    margin-top: 20px;
+  }
+.topRow{
+    padding: 5px;
+    background-color: #343434;
+    border-top: 2px solid #888888;
+    border-left: 2px solid #888888;
+    border-right: 2px solid #888888;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.midRow{
+    padding: 5px;
+    background-color: #343434;
+    border-left: 2px solid #888888;
+    border-right: 2px solid #888888;
+}
+.lastRow{
+    padding: 5px;
+    background-color: #343434;
+    border-left: 2px solid #888888;
+    border-right: 2px solid #888888;
+    border-bottom: 2px solid #888888;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+input{
+    background-color: cyan;
+    border-radius: 10px;
+    padding: 10px;
+    color: blue;
+    cursor: pointer;
+}
+.lastRow:hover,.midRow:hover,.topRow:hover{
+    border-color: aqua;
+}
+a{
+    text-decoration: none;
+    color: aqua;
+}
+a:hover{
+    
+    color: rgb(255, 147, 147);
+}
+.clone{
+    padding: 5px 10px;
+    font-size: 15px;
+    background-color: rgb(255, 255, 255);
+    margin-left: 20px;
+    border-radius: 10px;
+    color: #000000;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+#clone:hover{
+    transform: scale(1.10);
+}
+#clone:active{
+    transform: scale(0.96);
+}
+#clone{
+    cursor: pointer;
+}
+#okDone{
+    cursor:not-allowed;
+}
+.hidden{
+    display: none;
+}

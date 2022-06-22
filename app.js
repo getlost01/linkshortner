@@ -1,4 +1,5 @@
 const express = require('express')
+const router = express.Router()
 const shortId = require('shortid')
 const createHttpError = require('http-errors')
 const mongoose = require('mongoose')
@@ -10,9 +11,10 @@ const app = express()
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+app.use(router);
 
 app.listen(process.env.PORT || 3001, function(){
-  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+  console.log("Url Shortner listening on port %d in %s mode", this.address().port, app.settings.env);
 });
 
     mongoose.connect(process.env.MONGO_CONNECTION_URL, {useNewUrlParser: true ,useUnifiedTopology: true});
@@ -33,7 +35,7 @@ app.get('/', async (req, res, next) => {
   res.render('index')
 })
 
-app.post('/create', async (req, res, next) => {
+router.post('/create', async (req, res, next) => {
   try {
     // console.log(req.body)
     const url = req.body.url
@@ -51,7 +53,7 @@ app.post('/create', async (req, res, next) => {
     // Expire time Set
     var temp = expireDay.split('-');
     var TimeDeletion= new Date(new Date().setFullYear(parseInt(temp[0]),parseInt(temp[1]),parseInt(temp[2])))
-
+    // var TimeDeletion= new Date(new Date().getTime()+2*60*1000)
     // Check Custom
     if(custom === 'true')
     {
@@ -59,11 +61,9 @@ app.post('/create', async (req, res, next) => {
       if (urlExists) {
         throw createHttpError.BadRequest('Your custum url already exist try another one')
       }
-      if(password === 'true'){
         if (customUrl === "") {
-          throw createHttpError.BadRequest('Please enter a password of atleast 4 variable')
+          throw createHttpError.BadRequest('Please provide a valid custom Short Url')
         }
-      }
       slug = customUrl;
     }
     else
@@ -79,22 +79,36 @@ app.post('/create', async (req, res, next) => {
       }
     }
 
-    const shortUrl = new ShortUrl({ url: url, shortId: slug ,TimeDeletion: TimeDeletion.setSeconds(0,0), custom, password, passwordValue})
+    const shortUrl = new ShortUrl({ url: url, shortId: slug ,TimeDeletion: TimeDeletion.setMinutes(0,0,0), custom, password, passwordValue})
     const result = await shortUrl.save()
-    res.render('index', {
-      short_url: `${req.headers.host}/${result.shortId}`,
+    var requiredLink = `${req.headers.host}/${result.shortId}`;
+    res.render('create', {
+      long_url: url,
+      short_url: requiredLink,
+      short_Id: slug,
+      custom_link: custom,
+      password: password,
+      passwordValue:passwordValue,
+      creationTime: new Date(new Date().setSeconds(0,0)),
+      TimeDeletion: new Date(TimeDeletion.setSeconds(0,0))
     })
   } catch (error) {
     next(error)
   }
 })
 
-app.get('/:shortId', async (req, res, next) => {
+router.get('/:shortId', async (req, res, next) => {
   try {
     const { shortId } = req.params
     const result = await ShortUrl.findOne({ shortId })
     if (!result) {
-      throw createHttpError.NotFound('Short url does not exist')
+      throw createHttpError.NotFound('Short url does not exist or expired')
+    }
+    if(result.password)
+    {
+      res.render('password', {
+        shortId: result.shortId
+      })
     }
     res.redirect(result.url)
     await result.updateOne({ count: result.count+1 })
@@ -103,13 +117,44 @@ app.get('/:shortId', async (req, res, next) => {
   }
 })
 
+app.post('/password/validate', async (req, res, next) => {
+  try {
+    const shortURL = req.body.url
+    const passwordValue = req.body.passwordValue
+    var slug = shortURL.split("/")[1];
+    const result = await ShortUrl.findOne({ shortId: slug })
+    if (!result) {
+      res.render('password', {
+        err:"Wrong password, Please enter right one",
+        shortId: result.shortId
+      })
+      res.url = "/password"
+    }
+    if(result.passwordValue != passwordValue)
+    {
+      res.render('password', {
+        err:"Wrong password, Please enter right one",
+        shortId: result.shortId
+      })
+      res.url = "/password"
+    }
+    res.redirect(result.url)
+    await result.updateOne({ count: result.count+1 })
+  } catch (error) {
+    next(error)
+  }
+})
+
+
+
 app.use((req, res, next) => {
   next(createHttpError.NotFound())
 })
 
 app.use((err, req, res, next) => {
-  res.status(err.status || 500)
   res.render('index', { error: err.message })
+  res.status(err.status || 500)
+  res.url = "/"
 })
 
 setInterval(()=>{
@@ -120,4 +165,4 @@ setInterval(()=>{
     console.log("some document deleted");
     console.log(timeNow);
   });
-},60000);
+},3600000);

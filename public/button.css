@@ -1,23 +1,26 @@
-
-  .submit{
-    cursor: pointer;
-    position: relative;
-    padding: 5px 10px;
-    font-size: 16px;
-    width: 100%;
-    border-radius:4px;
-    background-image: url(/public/images/buttonbg.webp);
-    color: white;
-    border: 2px solid;
-    transition: all 0.5s ease;
-  }
-  .submit:hover{
-    color: cyan;
-    border: 2px solid cyan;
-    transform: scale(1.02);
-  }
-  .submit:active{
-    color: rgb(255, 134, 123);
-    border: 2px solid rgb(255, 134, 123);
-    transform: scale(0.96);
-  }
+.submit{
+  cursor: pointer;
+  position: relative;
+  padding: 5px 10px;
+  font-size: 16px;
+  width: 100%;
+  border-radius:4px;
+  background: transparent;
+  color: white;
+  border: 2px solid;
+  transition: all 0.5s ease;
+}
+.submit:hover{
+  color: cyan;
+  border: 2px solid cyan;
+  transform: scale(1.02);
+}
+.submit:active{
+  color: rgb(255, 134, 123);
+  border: 2px solid rgb(255, 134, 123);
+  transform: scale(0.96);
+}
+.hidden{
+  display: none;
+  opacity: 0;
+}

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" i
+    ntegrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" 
+    crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" 
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" 
+    integrity="sha512-wnea99uKIC3TJF7v4eKk4Y+lMz2Mklv18+r4na2Gn1abDRPPOeef95xTzdwGD9e6zXJBteMIhZ1+68QC5byJZw==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style_create.css">
+</head>
+<body >
+
+    <div class="row mx-0">
+        <div class="col-12 text-center py-4">
+            <h4>Short Url Details</h4>
+            <div class="d-flex justify-content-center">
+                <div style="width: 100px;margin: 5px; border: 1px solid white"></div>
+            </div>
+        </div>
+    </div>
+
+        <div class="row mx-4 my-1 text-md p-1 topRow justify-content-center flex-md-row -light text-light d-flex">
+               <div class="col-md-2 col-12" style="font-weight: 600; font-size: 16px; user-select: none;">
+                   Long Url
+               </div>
+               <div class="col-md-8 col-12" id="long_url" style="font-weight: 400; font-size: 14px;">
+                   : <% if (locals.long_url) {%> <%= long_url %><% }%>
+               </div>
+           </div>
+
+           <div class="row mx-4 my-1 text-md p-1 midRow justify-content-center flex-md-row -light text-light d-flex">
+            <div class="col-md-2 col-12" style="font-weight: 600; font-size: 16px; user-select: none;">
+                Short ID:
+            </div>
+             <div class="col-md-8 col-12" id="short_Id" style="font-weight: 400; font-size: 14px;">
+                : <% if (locals.short_Id) { %><%= short_Id %><% }%>
+            </div>
+        </div>
+
+           <div class="row mx-4 my-1 text-md p-1 midRow justify-content-center flex-md-row -light text-light d-flex">
+               <div class="col-md-2 col-12" style="font-weight: 600; font-size: 16px; user-select: none;">
+                   Short Url:
+               </div>
+                <div class="col-md-8 col-12" id="short_url" style="font-weight: 400; font-size: 14px;">
+                   : <% if (locals.short_url) { %><%= short_url %><% }%>
+               </div>
+           </div>
+
+           <div class="row mx-4 my-1 text-md p-1 midRow justify-content-center flex-md-row -light text-light d-flex">
+               <div class="col-md-2 col-12" style="font-weight: 600; font-size: 16px; user-select: none;">
+                   Is this a Custom Link:
+               </div>
+                <div class="col-md-8 col-12" id="custom_link" style="font-weight: 400; font-size: 14px;">
+                   : <% if (locals.custom_link) {%> <%= custom_link %><% }%>
+               </div>
+           </div>
+
+           <div class="row mx-4 my-1 text-md p-1 midRow justify-content-center flex-md-row -light text-light d-flex">
+               <div class="col-md-2 col-12" style="font-weight: 600; font-size: 16px; user-select: none;">
+                   Password Protected:
+               </div>
+                <div class="col-md-8 col-12" id="password" style="font-weight: 400; font-size: 14px;">
+                   : <% if (locals.password) { %><%= password %><% }%>
+               </div>
+           </div>
+
+           <div class="row mx-4 my-1 text-md p-1 midRow justify-content-center flex-md-row -light text-light d-flex">
+               <div class="col-md-2 col-12" style="font-weight: 600; font-size: 16px; user-select: none;">
+                   Password Value:
+               </div>
+                <div class="col-md-8 col-12" id="passwordValue" style="font-weight: 400; font-size: 14px;">
+                   : <% if (locals.passwordValue) { %> <%= passwordValue %><%  }%>
+               </div>
+           </div>          
+       
+           <div class="row mx-4 my-1 text-md p-1 midRow justify-content-center flex-md-row -light text-light d-flex">
+               <div class="col-md-2 col-12" style="font-weight: 600; font-size: 16px; user-select: none;">
+                   Creation Time:
+               </div>
+                <div class="col-md-8 col-12" id="creationTime" style="font-weight: 400; font-size: 14px;">
+                   : <% if (locals.creationTime) { %> <%=  creationTime %><%  }%>
+               </div>
+           </div>
+
+           <div class="row mx-4 my-1 text-md p-1 midRow justify-content-center flex-md-row -light text-light d-flex">
+               <div class="col-md-2 col-12" style="font-weight: 600; font-size: 16px; user-select: none;">
+                   Expiration Time:
+               </div>
+                <div class="col-md-8 col-12" id="TimeDeletion" style="font-weight: 400; font-size: 14px;">
+                   : <% if (locals.TimeDeletion) { %> <%= TimeDeletion %><%  }%>
+               </div>
+           </div>
+
+           <div class="row mx-4 my-1 text-md p-1 lastRow justify-content-center flex-md-row -light text-light d-flex">
+            <div class="col-md-2 col-12" style="font-weight: 600; font-size: 16px; user-select: none;">
+                   Initial Clicks:
+               </div>
+                 <div class="col-md-8 col-12" id="click" style="font-weight: 400; font-size: 14px;">
+                   : 0
+               </div>
+             </div>
+           
+
+
+                <div class="short-url rounded">
+                    <% if (locals.short_url) { %>
+                    <a href="<%= short_url %>" target="_blank"> <input type="button" id="hereShort" value="<%= short_url %>"> </a>
+                    <% } %>
+                    <div class="clone" id="clone">
+                        <i class="fa-solid fa-clone"></i>
+                    </div>
+                    <div class="clone hidden" id="okDone">
+                        <i class="fa-solid fa-check-double"></i>
+                    </div>
+                </div>
+
+                <div class="row mx-0">
+                    <div class="col-12 text-center p-2">
+                        Wait <span id="timer" style="color: cyan;"></span> seconds to redirect back. Click <a href="http://localhost:3001/" target="_parent" rel="noopener noreferrer">here</a>  to retun back now.
+                    </div>
+                </div>
+           
+        
+
+
+
+        <!-- JavaScript -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" 
+        crossorigin="anonymous"></script>
+        <script src="script_create.js"></script>
+        <!-- <script src="/public/script_create.js"></script> -->
+</body>
+</html>
