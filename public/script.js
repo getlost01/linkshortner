@@ -73,6 +73,8 @@ else{
     var i=0;
     var tempHtml=``
     linkArr.forEach((link) => {
+        if(new Date(link.TimeDeletion).getTime() > (new Date).getTime() )
+        {
         tempHtml = `
       <div class="row d-flex p-2 px-3" style="overflow: hidden; color:#bbbbbb;">
       <div class="col-12 py-2 col-md-6 relative" style="border-top-left-radius: 20px; border-left:2px solid #777; border-bottom:2px solid #777; border-top:2px solid #777;background-color: black;">
@@ -90,6 +92,7 @@ else{
        </div>
     </div>
         ` + tempHtml;
+        }
     });
     mainConLinks.innerHTML = tempHtml;
 }

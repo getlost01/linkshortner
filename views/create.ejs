@@ -112,9 +112,9 @@
 
 
                 <div class="short-url rounded">
-                    <% if (locals.short_url) { %>
-                    <a href="<%=short_url%>" target="_blank"> <input type="button" id="hereShort" value="<%= short_url %>"> </a>
-                    <% } %>
+                   
+                    <a href=" <% if (locals.short_Id) { %><%= short_Id %><% }%>" target="_blank"> <input type="text" id="hereShort" readonly value=" <% if (locals.short_url) { %> <%= short_url %> <% } %>"> </a>
+                    
                     <div class="clone" id="clone">
                         <i class="fa-solid fa-clone"></i>
                     </div>
@@ -138,5 +138,6 @@
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" 
         crossorigin="anonymous"></script>
         <script src="script_create.js"></script>
+        <script src="/public/style_create.css"></script>
 </body>
 </html>
