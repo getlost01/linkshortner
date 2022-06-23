@@ -16,7 +16,13 @@ if(localStorage.getItem("Mylinks")===null)
 }
 else{
   myLinkArr = JSON.parse(localStorage.getItem("Mylinks"));
+  if(myLinkArr.find(o => o.short_Id === currentSlug.short_Id))
+  {
+    console.log("Aready Exist");
+  }
+  else{
   myLinkArr.push(currentSlug);
+  }
 }
 localStorage.setItem("Mylinks",JSON.stringify(myLinkArr));
 

@@ -7,6 +7,8 @@
     <title>ABitShort</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="button.css">
+    <!-- <link rel="stylesheet" href="/public/style.css">
+    <link rel="stylesheet" href="/public/button.css"> -->
 
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" i
@@ -109,17 +111,21 @@
             </div>
           </div>
 
-      <div class="short-url">
-        <% if (locals.short_url) { %>
-        <a href="<%= short_url %>" target="_blank"> <input type="button" id="hereShort" value="<%= short_url %>"> </a>
-        <% } %>
-      </div>
+          <div class="container-fluid my-4 text-light mx-0">
+            <div class="row">
+              <h1 class="text-center p-2" style="font-size: 22px; font-weight: bold; user-select: none;" > Recent Links</h1>
+            </div>
+              <div class="mainConLinks text-center">
 
+              </div>
+          </div>
+          
 
     <!-- JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" 
     crossorigin="anonymous"></script>
     <script src="script.js"></script>
+    <!-- <script src="/public/script.js"></script> -->
 </body>
 </html>

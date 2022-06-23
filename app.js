@@ -105,10 +105,11 @@ router.get('/:shortId', async (req, res, next) => {
       throw createHttpError.NotFound('Short url does not exist or expired')
     }
     if(result.password)
-    {
+    {``
       res.render('password', {
         shortId: result.shortId
       })
+      return
     }
     res.redirect(result.url)
     await result.updateOne({ count: result.count+1 })
@@ -123,12 +124,10 @@ app.post('/password/validate', async (req, res, next) => {
     const passwordValue = req.body.passwordValue
     var slug = shortURL.split("/")[1];
     const result = await ShortUrl.findOne({ shortId: slug })
-    if (!result) {
-      res.render('password', {
-        err:"Wrong password, Please enter right one",
-        shortId: result.shortId
-      })
-      res.url = "/password"
+    if(!result)
+    {
+      next(createHttpError.NotFound())
+      return
     }
     if(result.passwordValue != passwordValue)
     {
@@ -136,7 +135,7 @@ app.post('/password/validate', async (req, res, next) => {
         err:"Wrong password, Please enter right one",
         shortId: result.shortId
       })
-      res.url = "/password"
+      return
     }
     res.redirect(result.url)
     await result.updateOne({ count: result.count+1 })
@@ -145,6 +144,29 @@ app.post('/password/validate', async (req, res, next) => {
   }
 })
 
+router.post('/details', async (req, res, next) => {
+  try {
+    const short_Id = req.body.short_Id
+    const result = await ShortUrl.findOne({ shortId: short_Id})
+    if (!result) {
+      next(createHttpError.NotFound())
+      return
+    }
+    res.render('details', {
+      long_url: result.url,
+      short_url: `${req.headers.host}/${result.shortId}`,
+      short_Id: result.shortId,
+      custom_link: result.custom,
+      password: result.password,
+      passwordValue:result.passwordValue,
+      creationTime: result. TimeCreation,
+      TimeDeletion: result.TimeDeletion,
+      count: result.count
+    })
+  } catch (error) {
+    next(error)
+  }
+})
 
 
 app.use((req, res, next) => {
@@ -152,9 +174,14 @@ app.use((req, res, next) => {
 })
 
 app.use((err, req, res, next) => {
+  if(err.message === "Not Found")
+  {
+    res.render('error')
+    res.status(err.status || 404)
+    return
+  }
   res.render('index', { error: err.message })
   res.status(err.status || 500)
-  res.url = "/"
 })
 
 setInterval(()=>{

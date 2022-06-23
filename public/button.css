@@ -24,3 +24,27 @@
   display: none;
   opacity: 0;
 }
+
+.submit-dark{
+  cursor: pointer;
+  position: relative;
+  padding: 2px;
+  font-size: 12px;
+  width: 100%;
+  border-radius:4px;
+  background: transparent;
+  color: rgb(255, 255, 255);
+  background-color: rgb(47, 47, 47);
+  border: 1px solid;
+  transition: all 0.5s ease;
+}
+.submit-dark:hover{
+  color: cyan;
+  border: 1px solid cyan;
+  transform: scale(1.02);
+}
+.submit-dark:active{
+  color: rgb(255, 134, 123);
+  border: 1px solid rgb(255, 134, 123);
+  transform: scale(0.96);
+}

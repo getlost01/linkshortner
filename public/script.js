@@ -7,6 +7,7 @@ var  password = document.querySelector("#password");
 var  submitBTN = document.querySelector("#submitBTN");
 var  iRead = document.querySelector("#iRead");
 var form = document.getElementById("myForm"); 
+var mainConLinks = document.querySelector(".mainConLinks");
 
 // var  hereShort = document.querySelector("#hereShort");
 
@@ -62,3 +63,33 @@ customUrl.addEventListener('input',()=>{
     }
     customUrl.value = newTemp;
 })
+
+var linkArr = JSON.parse(localStorage.getItem('Mylinks'));
+if(localStorage.getItem('Mylinks') === null)
+{
+    mainConLinks.innerHTML = "Links not found, Create Now";
+}
+else{
+    var i=0;
+    var tempHtml=``
+    linkArr.forEach((link) => {
+        tempHtml = `
+      <div class="row d-flex p-2 px-3" style="overflow: hidden; color:#bbbbbb;">
+      <div class="col-12 py-2 col-md-6 relative" style="border-top-left-radius: 20px; border-left:2px solid #777; border-bottom:2px solid #777; border-top:2px solid #777;background-color: black;">
+        <input class="p-2" type="text" value="${link.long_url}"readonly style="width: 100%; outline: none;background-color: black;">
+       </div>
+       <div class="col-12 py-2 col-md-6 relative d-flex" style="border-bottom-right-radius:20px; background-color: black; border-top:2px solid #777;border-bottom:2px solid #777; border-right:2px solid #777;">
+          <div class="col-8">
+          <input class="p-2 col-8" type="text" value="${link.short_url}"readonly style="width: 100%; outline: none; background-color: black;">
+          </div>
+            <div class="col-4 relative p-2" style="background-color: black;">
+            <form action="/details" autocomplete="off" method="post">
+            <input type="text" class="hidden" name="short_Id" value="${link.short_Id}"> 
+            <input type="submit" class="submit-dark" style="width: 100px;" value="Get Details">
+            </form></div>
+       </div>
+    </div>
+        ` + tempHtml;
+    });
+    mainConLinks.innerHTML = tempHtml;
+}
