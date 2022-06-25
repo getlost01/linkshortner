@@ -7,5 +7,7 @@ Also only active links shown on home page using local storage technology. This a
 ### Technology used
 HTML , CSS , Bootstap , Javascript , nodeJS , expressJS , EJS , Mongoose Atlas
 
-
 Visit this project [here](http://abitshort.herokuapp.com/) 
+
+## Preview
+<img width="700" alt="Screenshot 2022-06-05 at 1 47 31 PM" src=https://github.com/getlost01/temp/blob/main/GIF-220624_202457.gif>
