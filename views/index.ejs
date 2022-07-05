@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ABitShort</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="button.css">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/button.css">
     <!-- <link rel="stylesheet" href="/public/style.css">
     <link rel="stylesheet" href="/public/button.css"> -->
 
@@ -25,13 +25,13 @@
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="border-bottom: 1px solid #777777;">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">ShortABit</a>
+      <a class="navbar-brand" href="/">ABitShort</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="   border: 1px solid #03e9f4;">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">Home</a>
           </li>
           <li class="nav-item">
@@ -47,10 +47,10 @@
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
-          </li>
+          </li> -->
         </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <form class="d-flex" action="/search-url" method="post" target="_blank">
+          <input class="form-control me-2" type="url" placeholder="Search short-url" name="ShortURL">
           <button class="submit" type="submit" style="width: 120px;">Search</button>
         </form>
       </div>
@@ -61,7 +61,7 @@
         <p class="error"><%= error %> </p>
         <% } %>
 
-      <div class="container-fluid">
+      <div class="container-fluid" >
             <div class="col-12 d-flex p-2 py-4 justify-content-center ">
               <form action="/create" id="myForm" autocomplete="off" method="post">
 

@@ -52,7 +52,7 @@ router.post('/create', async (req, res, next) => {
 
     // Expire time Set
     var temp = expireDay.split('-');
-    var TimeDeletion= new Date(new Date().setFullYear(parseInt(temp[0]),parseInt(temp[1]),parseInt(temp[2])))
+    var TimeDeletion= new Date(new Date().setFullYear(parseInt(temp[0]),parseInt(temp[1]-1),parseInt(temp[2])))
     // var TimeDeletion= new Date(new Date().getTime()+2*60*1000)
     // Check Custom
     if(custom === 'true')
@@ -168,6 +168,29 @@ router.post('/details', async (req, res, next) => {
   }
 })
 
+router.post('/search-url', async (req, res, next) => {
+  try {
+    const ShortURL = req.body.ShortURL
+    var temp = ShortURL.split('/')
+    var short_Id = temp[temp.length-1];
+    if(!short_Id)
+    var short_Id = temp[temp.length-2];
+    const result = await ShortUrl.findOne({ shortId: short_Id})
+    if (!result) {
+      next(createHttpError.NotFound())
+      return
+    }
+    res.render('details', {
+      long_url: result.url,
+      short_url: `${req.headers.host}/${result.shortId}`,
+      creationTime: result. TimeCreation,
+      TimeDeletion: result.TimeDeletion,
+      count: result.count
+    })
+  } catch (error) {
+    next(error)
+  }
+})
 
 app.use((req, res, next) => {
   next(createHttpError.NotFound())
@@ -192,4 +215,4 @@ setInterval(()=>{
     console.log("some document deleted");
     console.log(timeNow);
   });
-},3600000);
+},60*60*60*1000);
