@@ -10,6 +10,7 @@ var currentSlug = {
 }
 
 var myLinkArr = [];
+var password = [];
 if(localStorage.getItem("Mylinks")===null)
 {
     myLinkArr.push(currentSlug);
@@ -27,14 +28,14 @@ else{
 localStorage.setItem("Mylinks",JSON.stringify(myLinkArr));
 
 const myTimeout = setTimeout(()=>{
-  window.open(`http://abitshort.herokuapp.com/`,"_parent");
+  window.open(`/`,"_parent");
 }, 10000);
 
 var ti = 10;
 setInterval(function () {document.querySelector("#timer").innerHTML = `${ti--}`}, 1000);
 
 document.querySelector("#clone").addEventListener('click',()=>{
-   navigator.clipboard.writeText(document.querySelector("#hereShort").value);
+   navigator.clipboard.writeText(document.querySelector("#hereShort").value.trim());
    document.querySelector("#clone").classList.add('hidden');
    document.querySelector("#okDone").classList.remove('hidden');
    const timeOUT = setTimeout(()=>{

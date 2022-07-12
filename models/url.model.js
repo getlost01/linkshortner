@@ -33,7 +33,7 @@ const ShortUrlSchema = new Schema({
     default: false,
     required: true
   },
-  passwordValue: {
+  passwordHash: {
     type: String,
     default: "",
     required: false
