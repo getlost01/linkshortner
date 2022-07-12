@@ -44,6 +44,7 @@ input{
     padding: 10px;
     color: blue;
     cursor: pointer;
+    outline: none;
 }
 .lastRow:hover,.midRow:hover,.topRow:hover{
     border-color: aqua;

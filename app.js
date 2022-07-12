@@ -3,6 +3,7 @@ const router = express.Router()
 const shortId = require('shortid')
 const createHttpError = require('http-errors')
 const mongoose = require('mongoose')
+const crypto = require("crypto")
 require('dotenv').config()
 const path = require('path')
 const ShortUrl = require('./models/url.model')
@@ -14,18 +15,18 @@ app.use(express.urlencoded({ extended: false }))
 app.use(router);
 
 app.listen(process.env.PORT || 3001, function(){
-  console.log("Url Shortner listening on port %d in %s mode", this.address().port, app.settings.env);
+  console.log("➡️ Url Shortner listening on port %d in %s mode 👍", this.address().port, app.settings.env);
 });
 
     mongoose.connect(process.env.MONGO_CONNECTION_URL, {useNewUrlParser: true ,useUnifiedTopology: true});
     const connection=mongoose.connection;
     try{
         connection.once('open',()=>{
-        console.log('Database connected.')
+        console.log('Database connected. 👍')
     })
     }
     catch(e){
-        console.log("Connection Fails.")
+        console.log("Connection Fails. 👎")
     }
 
 
@@ -43,8 +44,9 @@ router.post('/create', async (req, res, next) => {
     const custom = req.body.custom
     const customUrl = req.body.customUrl
     const password = req.body.password
-    const passwordValue = req.body.passwordValue
+    var passwordValue = req.body.passwordValue
     var slug = ""
+    var passwordHash = ""
     // Check valid URL
     if (!url) {
       throw createHttpError.BadRequest('Provide a valid url')
@@ -77,9 +79,11 @@ router.post('/create', async (req, res, next) => {
       if (passwordValue.length < 4) {
         throw createHttpError.BadRequest('Please enter a password of atleast 4 variable')
       }
+      let saltedPass = `${process.env.SALT_VAL}${passwordValue}${process.env.SALT_VAL}`
+      passwordHash = crypto.createHash('sha256').update(saltedPass).digest("hex")
     }
 
-    const shortUrl = new ShortUrl({ url: url, shortId: slug ,TimeDeletion: TimeDeletion.setMinutes(0,0,0), custom, password, passwordValue})
+    const shortUrl = new ShortUrl({ url: url, shortId: slug ,TimeDeletion: TimeDeletion.setMinutes(0,0,0), custom, password, passwordHash})
     const result = await shortUrl.save()
     var requiredLink = `${req.headers.host}/${result.shortId}`;
     res.render('create', {
@@ -88,7 +92,7 @@ router.post('/create', async (req, res, next) => {
       short_Id: slug,
       custom_link: custom,
       password: password,
-      passwordValue:passwordValue,
+      passwordValue: passwordValue,
       creationTime: new Date(new Date().setSeconds(0,0)),
       TimeDeletion: new Date(TimeDeletion.setSeconds(0,0))
     })
@@ -122,14 +126,17 @@ app.post('/password/validate', async (req, res, next) => {
   try {
     const shortURL = req.body.url
     const passwordValue = req.body.passwordValue
+    let saltedPass = `${process.env.SALT_VAL}${passwordValue}${process.env.SALT_VAL}`
+    var passwordHash = crypto.createHash('sha256').update(saltedPass).digest("hex")
     var slug = shortURL.split("/")[1];
     const result = await ShortUrl.findOne({ shortId: slug })
+
     if(!result)
     {
       next(createHttpError.NotFound())
       return
     }
-    if(result.passwordValue != passwordValue)
+    if(result.passwordHash != passwordHash)
     {
       res.render('password', {
         err:"Wrong password, Please enter right one",
@@ -158,7 +165,6 @@ router.post('/details', async (req, res, next) => {
       short_Id: result.shortId,
       custom_link: result.custom,
       password: result.password,
-      passwordValue:result.passwordValue,
       creationTime: result. TimeCreation,
       TimeDeletion: result.TimeDeletion,
       count: result.count
@@ -175,13 +181,19 @@ router.post('/search-url', async (req, res, next) => {
     var short_Id = temp[temp.length-1];
     if(!short_Id)
     var short_Id = temp[temp.length-2];
+
     const result = await ShortUrl.findOne({ shortId: short_Id})
     if (!result) {
       next(createHttpError.NotFound())
       return
     }
+    var longUrlShow = result.url;
+    if(result.password === true)
+    {
+      longUrlShow = `This is password protected url, " Nothing to show 😅 "`
+    }
     res.render('details', {
-      long_url: result.url,
+      long_url: longUrlShow,
       short_url: `${req.headers.host}/${result.shortId}`,
       creationTime: result. TimeCreation,
       TimeDeletion: result.TimeDeletion,
@@ -212,7 +224,7 @@ setInterval(()=>{
   var myquery = { TimeDeletion: timeNow};
   ShortUrl.deleteMany(myquery, function(err, obj) {
     if (err) throw err;
-    console.log("some document deleted");
+    console.log("Some document deleted 🧐");
     console.log(timeNow);
   });
-},60*60*60*1000);
+},60*60*1000);
