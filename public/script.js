@@ -67,7 +67,7 @@ customUrl.addEventListener('input',()=>{
 var linkArr = JSON.parse(localStorage.getItem('Mylinks'));
 if(localStorage.getItem('Mylinks') === null)
 {
-    mainConLinks.innerHTML = `<div style="color: #ccc; font-size:14px;">Links not found, Create now</div>`;
+    mainConLinks.innerHTML = `<div style="color: cyan; font-size:14px;">Links not found, Create now</div>`;
 }
 else{
     var i=0;
@@ -95,5 +95,9 @@ else{
         ` + tempHtml;
         }
     });
+    if(tempHtml)
     mainConLinks.innerHTML = tempHtml;
+    else{
+    mainConLinks.innerHTML = `<div style="color: cyan; font-size:14px;">Links not found, Create now</div>`;
+    }
 }
