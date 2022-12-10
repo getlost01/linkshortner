@@ -183,6 +183,7 @@ router.post('/search-url', async (req, res, next) => {
     var short_Id = temp[temp.length-2];
 
     const result = await ShortUrl.findOne({ shortId: short_Id})
+    // console.log(result);
     if (!result) {
       next(createHttpError.NotFound())
       return
