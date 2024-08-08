@@ -1,7 +1,7 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const ShortUrlSchema = new Schema({
+const shortUrlSchema = new Schema({
   url: {
     type: String,
     required: true
@@ -12,34 +12,33 @@ const ShortUrlSchema = new Schema({
   },
   custom: {
     type: Boolean,
-    required: false
+    default: false
   },
   count: {
     type: Number, 
     default: 0,
     required: true
   },
-  TimeCreation: {
+  timeCreation: {
     type: Date,
-    required: true,
-    default: new Date()
+    default: Date.now,
+    required: true
   },
-  TimeDeletion: {
+  timeDeletion: {
     type: Date,
     required: true
   },
-  password:{
+  password: {
     type: Boolean,
     default: false,
     required: true
   },
   passwordHash: {
     type: String,
-    default: "",
-    required: false
+    default: ""
   }
-})
+});
 
-const ShortUrl = mongoose.model('shortUrl', ShortUrlSchema)
+const ShortUrl = mongoose.model('ShortUrl', shortUrlSchema);
 
-module.exports = ShortUrl
+module.exports = ShortUrl;
